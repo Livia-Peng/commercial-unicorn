@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>commercial unicorn</title>
+  <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.0-beta2/css/bootstrap-grid.min.css"
+        rel="stylesheet">
+  <link href="css/common.css" rel="stylesheet">
+  <style type="text/css">
+    .canvasCtn {
+      margin: 0 auto;
+      width: max-content;
+      /*border: 1px solid rebeccapurple;*/
+    }
+  </style>
+</head>
+<body>
+<div class="row mar-all">
+  <div class="mar-all"><h2 class="text-center">商业独角兽</h2></div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="canvasCtn">
+        <canvas id="myCanvas" width="500" height="500">
+          Your browser does not support the canvas element.
+        </canvas>
+      </div>
+    </div>
+    <div class="col-md-6">
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/globalVars.js"></script>
+<script type="text/javascript" src="js/layer.js"></script>
+<script type="text/javascript">
+  (function () {
+    window.addEventListener("load", function () {
+      const layer = new Layer();
+      layer.drawChassis();
+    }, false)
+  })()
+</script>
+</body>
+</html>
