@@ -54,13 +54,15 @@ class Layer {
       row++;
     } while (row < this.rectCfg.row);
 
+    // 初始位置在正中央
     const halfMap = {
       cols: Math.floor(this.rectCfg.cols / 2),
       row: Math.floor(this.rectCfg.row / 2),
     };
     this.drawUnicorn(
       this.calCoordinate(this.rectCfg.width, halfMap.cols),
-      this.calCoordinate(this.rectCfg.height, halfMap.row)
+      this.calCoordinate(this.rectCfg.height, halfMap.row),
+      directions.left
     )
   }
 
@@ -95,17 +97,56 @@ class Layer {
   }
 
   // 独角兽
-  drawUnicorn(x, y) {
-    const xStart = x + (this.rectCfg.width / 2) + 8;
-    const yStart = y + (this.rectCfg.height / 2);
+  drawUnicorn(x, y, direction) {
+    // console.log(direction)
+    const offset = 2;
     const radius = 20;
 
-    ctx.drawImage(this.unicornImg, xStart - radius, yStart - radius, radius * 2, radius * 2);
+    let xStart = x + (this.rectCfg.width / 2);
+    let yStart = y + (this.rectCfg.height / 2);
+    // 三角形（前进方向）
+    const triangleH = 10;
+    const triangleOffSet = radius - offset;
+    ctx.beginPath();
+    switch (direction) {
+      case directions.up:
+        yStart += offset;
+        ctx.moveTo(xStart - triangleH, yStart - triangleOffSet);
+        ctx.lineTo(xStart, yStart - triangleOffSet - triangleH);
+        ctx.lineTo(xStart + triangleH, yStart - triangleOffSet);
+        break;
+      case directions.down:
+        yStart -= offset;
+        ctx.moveTo(xStart - triangleH, yStart + triangleOffSet);
+        ctx.lineTo(xStart, yStart + triangleOffSet + triangleH);
+        ctx.lineTo(xStart + triangleH, yStart + triangleOffSet);
+        break;
+      case directions.left:
+        xStart += offset;
+        ctx.moveTo(xStart - triangleOffSet, yStart - triangleH);
+        ctx.lineTo(xStart - triangleOffSet - triangleH, yStart);
+        ctx.lineTo(xStart - triangleOffSet, yStart + triangleH);
+        break;
+      case directions.right:
+        xStart -= offset;
+        ctx.moveTo(xStart + triangleOffSet, yStart - triangleH);
+        ctx.lineTo(xStart + triangleOffSet + triangleH, yStart);
+        ctx.lineTo(xStart + triangleOffSet, yStart + triangleH);
+        break;
+      default:
+    }
+    ctx.closePath();
+    ctx.fillStyle = this.lineGradient;
+    ctx.fill();
+    ctx.strokeStyle = this.lineGradient;
+    ctx.stroke();
 
+    // 图像
+    ctx.drawImage(this.unicornImg, xStart - radius, yStart - radius, radius * 2, radius * 2);
+    // 圆形
     ctx.beginPath();
     ctx.arc(xStart, yStart, radius, 0, 2 * Math.PI);
     ctx.closePath();
-    // 用渐变进行填充
     ctx.strokeStyle = this.lineGradient;
     ctx.lineWidth = 2;
     ctx.shadowBlur = 0;

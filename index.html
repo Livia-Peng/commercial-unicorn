@@ -34,9 +34,9 @@
 <script type="text/javascript" src="js/globalVars.js"></script>
 <script type="text/javascript" src="js/layer.js"></script>
 <script type="text/javascript">
+  const layer = new Layer();
   (function () {
     window.addEventListener("load", function () {
-      const layer = new Layer();
       layer.drawChassis();
     }, false)
   })()
